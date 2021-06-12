@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        displayScreen(-1)
+        displayScreen(R.id.nav_home)
     }
 
     override fun onBackPressed() {

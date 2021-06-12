@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.example.senthil.kotlin_navigationdrawer"
+        applicationId "com.tugas.zaky.diaryapps"
         minSdkVersion 20
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28

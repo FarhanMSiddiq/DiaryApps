@@ -37,6 +37,7 @@ tools:context=".Fragment.HomeFragment">
             android:textSize="18dp"
             android:layout_marginTop="10dp"
             android:gravity="center"
+            android:textColor="#2C406E"
             android:text="Belum Ada Catatan , Ayo Mulai Mencatat"/>
 
     </LinearLayout>

@@ -44,7 +44,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_settings -> return true
+            R.id.action_grid -> {
+                val fragment = HomeFragment.newInstance("grid")
+                supportFragmentManager.beginTransaction().replace(R.id.relativelayout, fragment).commit()
+                return true
+            }
+            R.id.action_list -> {
+                val fragment = HomeFragment.newInstance("list")
+                supportFragmentManager.beginTransaction().replace(R.id.relativelayout, fragment).commit()
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
     }
@@ -55,7 +64,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         when (id){
             R.id.nav_home -> {
-                supportFragmentManager.beginTransaction().replace(R.id.relativelayout, HomeFragment()).commit()
+                val fragment = HomeFragment.newInstance("grid")
+                supportFragmentManager.beginTransaction().replace(R.id.relativelayout, fragment).commit()
             }
 
             R.id.nav_about -> {

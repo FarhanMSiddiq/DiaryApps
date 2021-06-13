@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    app:cardCornerRadius="5dp"
+    app:cardCornerRadius="10dp"
     app:cardElevation="3dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/background_catatan1"
         android:orientation="vertical">
 
         <com.makeramen.roundedimageview.RoundedImageView
@@ -23,46 +24,63 @@
             app:riv_corner_radius_top_left="5dp"
             app:riv_corner_radius_top_right="5dp" />
 
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="12dp"
-            android:text="Title"
-            android:textColor="@color/colorAccent"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvText"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:text="Text"
-            android:textColor="@color/colorAccent"
-            android:textSize="12dp" />
+            android:orientation="horizontal">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="12dp"
-            android:background="@android:color/darker_gray" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="2dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="10dp"
+                app:cardCornerRadius="2dp"
+                app:cardBackgroundColor="#8F81FE"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="12dp"
+                    android:text="Title"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:text="Text"
+                    android:fontFamily="@font/hindsiliguri_regular"
+                    android:textColor="#9AA8C7"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/tvTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="20dp"
             android:text="Date"
-            android:textColor="@color/colorAccent"
-            android:textSize="8sp" />
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/background_date"
+            android:textColor="#8F81FE"
+            android:textSize="10dp" />
 
     </LinearLayout>
 

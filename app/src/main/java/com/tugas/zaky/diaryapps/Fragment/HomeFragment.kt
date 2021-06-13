@@ -4,10 +4,12 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -26,12 +28,23 @@ class HomeFragment : Fragment() , onClickItemListener {
     private var noteAdapter: NoteAdapter? = null
     private var onClickPosition = -1
     var rvListNote : RecyclerView? = null
-
+    var layout_not_found : LinearLayout? = null
+    var stringLayout = ""
     companion object {
+        @JvmStatic
+        fun newInstance(stringLayout: String) = HomeFragment().apply {
+            val fragment = HomeFragment()
+            val args = Bundle()
+            args.putString("stringLayout", stringLayout)
+            fragment.setArguments(args)
+            return fragment
+        }
+
         private const val REQUEST_ADD = 1
         private const val REQUEST_UPDATE = 2
         private const val REQUEST_SHOW = 3
     }
+
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -39,19 +52,35 @@ class HomeFragment : Fragment() , onClickItemListener {
         // Inflate the layout for this fragment
         val view : View = inflater.inflate(R.layout.fragment_home, container, false)
         rvListNote = view.findViewById(R.id.rvListNote!!)
-        
+        layout_not_found = view.findViewById(R.id.layout_notfound)
+
+        arguments?.getString("stringLayout")?.let {
+            stringLayout = it
+        }
+
         view.fabCreateNote.setOnClickListener {
             startActivityForResult(Intent(view.context, CreateNoteActivity::class.java), REQUEST_ADD)
         }
 
-        noteAdapter = NoteAdapter(modelNoteList, this)
+
+
+        noteAdapter = NoteAdapter(modelNoteList, this , stringLayout)
         rvListNote!!.setAdapter(noteAdapter)
 
-        //change mode List to Grid
-        modeGrid()
+        Log.e("Status",stringLayout)
+
+        if (stringLayout.equals("grid")){
+            modeGrid()
+        }else{
+            modeList()
+        }
+
+
 
         //get Data Catatan
         getNote(REQUEST_SHOW, false)
+
+
 
         return view
     }
@@ -74,10 +103,24 @@ class HomeFragment : Fragment() , onClickItemListener {
                 if (requestCode == REQUEST_SHOW) {
                     modelNoteList.addAll(notes)
                     noteAdapter?.notifyDataSetChanged()
+                    if (notes.size>0){
+                        layout_not_found!!.visibility = View.GONE
+                        rvListNote!!.visibility = View.VISIBLE
+                    }else{
+                        layout_not_found!!.visibility = View.VISIBLE
+                        rvListNote!!.visibility = View.GONE
+                    }
                 } else if (requestCode == REQUEST_ADD) {
                     modelNoteList.add(0, notes[0])
                     noteAdapter?.notifyItemInserted(0)
                     rvListNote!!.smoothScrollToPosition(0)
+                    if (notes.size>0){
+                        layout_not_found!!.visibility = View.GONE
+                        rvListNote!!.visibility = View.VISIBLE
+                    }else{
+                        layout_not_found!!.visibility = View.VISIBLE
+                        rvListNote!!.visibility = View.GONE
+                    }
                 } else if (requestCode == REQUEST_UPDATE) {
                     modelNoteList.removeAt(onClickPosition)
                     if (deleteNote) {
@@ -85,6 +128,13 @@ class HomeFragment : Fragment() , onClickItemListener {
                     } else {
                         modelNoteList.add(onClickPosition, notes[onClickPosition])
                         noteAdapter?.notifyItemChanged(onClickPosition)
+                    }
+                    if (notes.size>0){
+                        layout_not_found!!.visibility = View.GONE
+                        rvListNote!!.visibility = View.VISIBLE
+                    }else{
+                        layout_not_found!!.visibility = View.VISIBLE
+                        rvListNote!!.visibility = View.GONE
                     }
                 }
             }

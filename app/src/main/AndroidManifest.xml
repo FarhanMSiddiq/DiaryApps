@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateNoteActivity"
-                  android:label="Buat Catatan"
+                  android:label="Catatan"
                   android:parentActivityName=".MainActivity"/>
     </application>
 

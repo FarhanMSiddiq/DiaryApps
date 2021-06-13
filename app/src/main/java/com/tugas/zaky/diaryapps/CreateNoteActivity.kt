@@ -52,10 +52,11 @@ class CreateNoteActivity : AppCompatActivity() {
         }
 
         if (modelNoteExtra != null) {
-            linearDelete.visibility = View.VISIBLE
+            btnDelete.visibility = View.VISIBLE
             btnDelete.setOnClickListener {
                 showDeleteDialog()
             }
+            fabSaveNote.setText("Ubah Catatan")
         }
 
         btnHapusUrl.setOnClickListener {
@@ -64,26 +65,8 @@ class CreateNoteActivity : AppCompatActivity() {
             btnHapusUrl.setVisibility(View.GONE)
         }
 
-        btnAddUrl.setOnClickListener {
-            showDialogUrl()
-        }
 
-        btnAddImage.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(applicationContext,
-                    Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this@CreateNoteActivity,
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_PERMISSION)
-            } else {
-                selectImage()
-            }
-        }
 
-        fabDeleteImage.setOnClickListener {
-            imageNote.setImageBitmap(null)
-            imageNote.setVisibility(View.GONE)
-            fabDeleteImage.setVisibility(View.GONE)
-            selectImagePath = ""
-        }
 
         fabSaveNote.setOnClickListener(View.OnClickListener {
             if (editTextTitle.getText().toString().isEmpty()) {
@@ -134,10 +117,7 @@ class CreateNoteActivity : AppCompatActivity() {
         editTextDesc.setText(modelNoteExtra?.noteText)
 
         if (modelNoteExtra?.imagePath != null && modelNoteExtra?.imagePath?.trim()?.isEmpty()!!) {
-            imageNote.setImageBitmap(BitmapFactory.decodeFile(modelNoteExtra?.imagePath))
-            imageNote.visibility = View.VISIBLE
             selectImagePath = modelNoteExtra?.imagePath
-            fabDeleteImage.visibility = View.VISIBLE
         }
 
         if (modelNoteExtra?.url != null && modelNoteExtra?.url?.trim()?.isEmpty()!!) {
@@ -175,9 +155,6 @@ class CreateNoteActivity : AppCompatActivity() {
                     try {
                         val inputStream = contentResolver.openInputStream(selectImgUri)
                         val bitmap = BitmapFactory.decodeStream(inputStream)
-                        imageNote.setImageBitmap(bitmap)
-                        imageNote.visibility = View.VISIBLE
-                        fabDeleteImage.visibility = View.VISIBLE
                         selectImagePath = getPathFromUri(selectImgUri)
                     } catch (e: Exception) {
                         e.printStackTrace()
